@@ -6,6 +6,10 @@ A js library that allows you to output your messages verbatim, such as in chatti
 
 - 用于在聊天中输出消息，实现逐字逐句打印的效果
 
+效果图如下：
+
+![output-verbatim](./output-verbatim.gif)
+
 ## 使用
 
 ```js
