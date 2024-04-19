@@ -12,16 +12,47 @@ A js library that allows you to output your messages verbatim, such as in chatti
 
 ## 使用
 
-```js
+```vue
+<template>
+  <p v-html="content"></p>
+</template>
+<script setup>
 import outputVerbatim from 'output-verbatim';
+import { ref } from 'vue';
 
-outputVerbatim('<b>H</b>ello, <b>W</b>orld!', {
+const content = ref('');
+outputVerbatim('<b>H</b>ello, <b>W</b>orld!  <b>T</b>he <b>I</b>s <b>O</b>utput <b>V</b>erbatim.', {
   speed: 30, // 打印周期，30一个周期毫秒
   // 每个周期输出一个字，富文本会包含标签
   eachRound: function (currText) {
     console.log(currText);
+    content.value = currText;
   },
 });
+</script>
+
+<style lang="scss">
+p {
+  letter-spacing: 4px;
+  // text-align: center;
+  font-size: 1.25rem;
+  line-height: 1.5;
+
+  b {
+    font-size: 1.125em;
+    font-weight: bold;
+    background: linear-gradient(180deg, #c191ff 0%, #4584ff 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-left: 6px;
+
+    &:first-child {
+      margin-right: 0;
+    }
+  }
+}
+</style>
 ```
 
 ## 说明
