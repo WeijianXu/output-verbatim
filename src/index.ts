@@ -2,7 +2,7 @@
  * @Author: WeijianXu weijian.xu@unidt.com
  * @Date: 2024-04-17 15:15:45
  * @LastEditors: WeijianXu weijian.xu@unidt.com
- * @LastEditTime: 2024-04-18 11:04:54
+ * @LastEditTime: 2024-04-18 17:17:51
  * @FilePath: \output-verbatim\src\index.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -62,7 +62,7 @@ function getCurrStepInfo(currStepStr: string | string[]) {
     start = currStepStr[0];
     if (currStepStr.length >= 2) {
       end = currStepStr[currStepStr.length - 1];
-      text = currStepStr.splice(1, currStepStr.length - 2).join('');
+      text = currStepStr.slice(1, currStepStr.length - 1).join('');
     } else {
       text = '';
     }
@@ -83,9 +83,10 @@ export function outputRichText(richText: VerbatimText, options: VerbatimOptions 
   let stepIdx = 0; // 当前步长游标
   let round = 0; // 当前周期循环次数
 
-  let currText = ''; // 当前打印文本
   let stepInfo = getCurrStepInfo(strList[step]);
+  let currText = stepInfo.start; // 当前打印文本
   let currStepStr = stepInfo.text;
+
   let intervalId = window.setInterval(() => {
     if (step >= strList.length) {
       clearInterval(intervalId);
