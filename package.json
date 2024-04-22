@@ -1,6 +1,6 @@
 {
   "name": "output-verbatim",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A js library that allows you to output your messages verbatim, such as in chatting.",
   "main": "dist/output-verbatim.cjs.js",
   "module": "dist/es/index.js",
