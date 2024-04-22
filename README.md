@@ -2,15 +2,15 @@
 
 A js library that allows you to output your messages verbatim, such as in chatting.
 
-## 功能
+## Fuctions
 
-- 用于在聊天中输出消息，实现逐字逐句打印的效果
+- Used to output messages in chat to achieve verbatim printout.
 
-效果图如下：
+The effect is as follows：
 
 ![output-verbatim](./output-verbatim.gif)
 
-## 使用
+## Usage
 
 ```vue
 <template>
@@ -22,8 +22,8 @@ import { ref } from 'vue';
 
 const content = ref('');
 outputVerbatim('<b>H</b>ello, <b>W</b>orld!  <b>T</b>he <b>I</b>s <b>O</b>utput <b>V</b>erbatim.', {
-  speed: 30, // 打印周期，30一个周期毫秒
-  // 每个周期输出一个字，富文本会包含标签
+  speed: 30, // Printing speed per word, 30 milliseconds a word, a cycle
+  // Output one word per cycle, rich text will contain labels
   eachRound: function (currText) {
     console.log(currText);
     content.value = currText;
@@ -55,18 +55,18 @@ p {
 </style>
 ```
 
-## 说明
+## Options
 
-| 参数      | 说明                                   | 类型     | 默认值    |
-| --------- | -------------------------------------- | -------- | --------- |
-| speed     | 打印周期，默认 30 毫秒一个周期         | Number   | 30        |
-| eachRound | 每个周期输出一个字，富文本会包含标签   | Function | undefined |
-| before    | 打印开始前的回调函数，可用于初始化操作 | Function | undefined |
-| complete  | 打印结束后的回调函数，可用于清理操作   | Function | undefined |
+| property  | description                                                                         | type     | default   |
+| --------- | ----------------------------------------------------------------------------------- | -------- | --------- |
+| speed     | Printing speed per word. One word, one cycle.                                       | Number   | 30        |
+| eachRound | Output one word per cycle, rich text will contain labels                            | Function | undefined |
+| before    | Callback function before printing starts, can be used for initialization operations | Function | undefined |
+| complete  | Callback function at the end of the print that can be used for cleanup operations   | Function | undefined |
 
-> 注意： 输入文本目前可以支持富文本，但是只支持一级，不能嵌套。
-> 即 `<b>加粗<i>斜体</i></b>` 时，会输出 `<b>加粗<i>斜</b>` 而不是 `<b>加粗<i>斜</i></b>`
-> 因此斜体效果，只有最后完全打印的时候才生效。
+> Note: Input text can currently support rich text, but only one level, not nested.
+> Such as `<b>bold<i>italic</i></b>` 时，会输出 `<b>bold<i>斜</b>` 而不是 `<b>bold<i>斜</i></b>`
+> Therefore, the italic effect only takes effect at the end when it is fully printed.
 
 ## License
 

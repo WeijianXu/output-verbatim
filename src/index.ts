@@ -2,7 +2,7 @@
  * @Author: WeijianXu weijian.xu@unidt.com
  * @Date: 2024-04-17 15:15:45
  * @LastEditors: WeijianXu weijian.xu@unidt.com
- * @LastEditTime: 2024-04-18 17:17:51
+ * @LastEditTime: 2024-04-22 15:16:07
  * @FilePath: \output-verbatim\src\index.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -31,7 +31,7 @@ export function splitRichText(str: VerbatimText): Array<string | string[]> {
 
       // 需要与栈顶元素匹配
       const isSameTag = tagStack[0].indexOf('<' + tagName) == 0;
-      console.log('tagName', tagName, isSameTag);
+      // console.log('tagName', tagName, isSameTag);
       tagStack.push(result[i]);
       // 本次匹配结束
       if (isSameTag) {
@@ -74,7 +74,7 @@ function getCurrStepInfo(currStepStr: string | string[]) {
 
 export function outputRichText(richText: VerbatimText, options: VerbatimOptions = {}) {
   if (!richText) {
-    console.error('文本内容为空或未定义');
+    console.error('No input text');
     return;
   }
   const strList = splitRichText(richText) || [];
