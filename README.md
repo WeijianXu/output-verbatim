@@ -1,3 +1,12 @@
+<!--
+ * @Author: WeijianXu weijian.xu@unidt.com
+ * @Date: 2024-04-17 12:03:52
+ * @LastEditors: WeijianXu weijian.xu@unidt.com
+ * @LastEditTime: 2024-04-22 18:25:16
+ * @FilePath: \output-verbatim\README.md
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
+
 # output-verbatim
 
 A js library that allows you to output your messages verbatim, such as in chatting.
@@ -17,17 +26,24 @@ The effect is as follows：
   <p v-html="content"></p>
 </template>
 <script setup>
-import outputVerbatim from 'output-verbatim';
-import { ref } from 'vue';
+import OutputVerbatim from 'output-verbatim';
+import { ref, onUnmounted } from 'vue';
 
 const content = ref('');
-outputVerbatim('<b>H</b>ello, <b>W</b>orld!  <b>T</b>he <b>I</b>s <b>O</b>utput <b>V</b>erbatim.', {
-  speed: 30, // Printing speed per word, 30 milliseconds a word, a cycle
-  // Output one word per cycle, rich text will contain labels
-  eachRound: function (currText) {
-    console.log(currText);
-    content.value = currText;
+const output = new OutputVerbatim(
+  '<b>H</b>ello, <b>W</b>orld!  <b>T</b>he <b>I</b>s <b>O</b>utput <b>V</b>erbatim.',
+  {
+    speed: 30, // Printing speed per word, 30 milliseconds a word, a cycle
+    // Output one word per cycle, rich text will contain labels
+    eachRound: function (currText) {
+      console.log(currText);
+      content.value = currText;
+    },
   },
+);
+
+onUnmounted(() => {
+  output.stop();
 });
 </script>
 
@@ -60,6 +76,7 @@ p {
 | property  | description                                                                         | type     | default   |
 | --------- | ----------------------------------------------------------------------------------- | -------- | --------- |
 | speed     | Printing speed per word. One word, one cycle.                                       | Number   | 30        |
+| start     | Start print begin at the index of the string, default is 0                          | Number   | 0         |
 | eachRound | Output one word per cycle, rich text will contain labels                            | Function | undefined |
 | before    | Callback function before printing starts, can be used for initialization operations | Function | undefined |
 | complete  | Callback function at the end of the print that can be used for cleanup operations   | Function | undefined |
