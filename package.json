@@ -13,17 +13,16 @@
   "typings": "types/index.d.ts",
   "files": [
     "dist",
-    "types",
-    "src"
+    "types"
   ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/WeijianXu/output-verbatim.git"
   },
   "keywords": [
-    "table",
-    "excel",
-    "export"
+    "output verbatim",
+    "chat message verbatim",
+    "print verbatim"
   ],
   "author": "William Xu",
   "license": "MIT",
