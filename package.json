@@ -8,7 +8,7 @@
   "scripts": {
     "build": "rollup --config tool/rollup.config.js",
     "test": "node ./test",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build && npm run test"
   },
   "typings": "types/index.d.ts",
   "files": [
