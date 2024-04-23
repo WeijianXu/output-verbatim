@@ -57,12 +57,16 @@ p {
 
 ## 说明
 
-| 参数      | 说明                                   | 类型     | 默认值    |
-| --------- | -------------------------------------- | -------- | --------- |
-| speed     | 打印周期，默认 30 毫秒一个周期         | Number   | 30        |
-| eachRound | 每个周期输出一个字，富文本会包含标签   | Function | undefined |
-| before    | 打印开始前的回调函数，可用于初始化操作 | Function | undefined |
-| complete  | 打印结束后的回调函数，可用于清理操作   | Function | undefined |
+| 参数         | 说明                                                           | 类型     | 默认值    |
+| ------------ | -------------------------------------------------------------- | -------- | --------- |
+| speed        | 打印周期，默认 30 毫秒一个周期                                 | Number   | 30        |
+| start        | 传入字符从那里开始，默认从 0 开始，否则，从指定的 index 开始。 | Number   | 0         |
+| rich         | 是否为富文本                                                   | Boolean  | true      |
+| markdown     | 是否按照 markdown 格式将字符转成 HTML 输出                     | Boolean  | false     |
+| endLineBreak | 是否在输出的最后添加换行符，默认为 false                       | Boolean  | false     |
+| eachRound    | 每个周期输出一个字，富文本会包含标签                           | Function | undefined |
+| before       | 打印开始前的回调函数，可用于初始化操作                         | Function | undefined |
+| complete     | 打印结束后的回调函数，可用于清理操作                           | Function | undefined |
 
 > 注意： 输入文本目前可以支持富文本，但是只支持一级，不能嵌套。
 > 即 `<b>加粗<i>斜体</i></b>` 时，会输出 `<b>加粗<i>斜</b>` 而不是 `<b>加粗<i>斜</i></b>`

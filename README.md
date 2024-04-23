@@ -73,15 +73,16 @@ p {
 
 ## Options
 
-| property  | description                                                                         | type     | default   |
-| --------- | ----------------------------------------------------------------------------------- | -------- | --------- |
-| speed     | Printing speed per word. One word, one cycle.                                       | Number   | 30        |
-| start     | Start print begin at the index of the string, default is 0                          | Number   | 0         |
-| rich      | Whether it is rich text, if so HTML tags are output directly.                       | Boolean  | true      |
-| markdown  | Whether the characters are converted to HTML according to markdown syntax.          | Boolean  | false     |
-| eachRound | Output one word per cycle, rich text will contain labels                            | Function | undefined |
-| before    | Callback function before printing starts, can be used for initialization operations | Function | undefined |
-| complete  | Callback function at the end of the print that can be used for cleanup operations   | Function | undefined |
+| property     | description                                                                         | type     | default   |
+| ------------ | ----------------------------------------------------------------------------------- | -------- | --------- |
+| speed        | Printing speed per word. One word, one cycle.                                       | Number   | 30        |
+| start        | Start print begin at the index of the string, default is 0                          | Number   | 0         |
+| rich         | Whether it is rich text, if so HTML tags are output directly.                       | Boolean  | true      |
+| markdown     | Whether the characters are converted to HTML according to markdown syntax.          | Boolean  | false     |
+| endLineBreak | Whether to add a line break at the end of the string.                               | Boolean  | false     |
+| eachRound    | Output one word per cycle, rich text will contain labels                            | Function | undefined |
+| before       | Callback function before printing starts, can be used for initialization operations | Function | undefined |
+| complete     | Callback function at the end of the print that can be used for cleanup operations   | Function | undefined |
 
 > Note: Input text can currently support rich text, but only one level, not nested.
 > Such as `<b>bold<i>italic</i></b>` ，output will be `<b>bold<i>italic</b>` but not `<b>bold<i>italic</i></b>`

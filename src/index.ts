@@ -2,7 +2,7 @@
  * @Author: WeijianXu weijian.xu@unidt.com
  * @Date: 2024-04-17 15:15:45
  * @LastEditors: WeijianXu weijian.xu@unidt.com
- * @LastEditTime: 2024-04-23 16:20:20
+ * @LastEditTime: 2024-04-23 17:53:07
  * @FilePath: \output-verbatim\src\index.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -18,34 +18,40 @@ export function splitRichText(str: VerbatimText): Array<string | string[]> {
   let optimizedResult = [];
   let tagStack = [];
   for (let i = 0; i < result.length; i++) {
-    const isStartTag = result[i].startsWith('<') && !result[i].startsWith('</');
-    const isEmptyTag = result[i].startsWith('<') && result[i].startsWith('/>');
-    const isEndTag = result[i].startsWith('</') && result[i].endsWith('>');
+    const r = result[i];
+    const isStartTag = r.startsWith('<') && !r.startsWith('</');
+    const isEmptyTag = r.startsWith('<') && r.startsWith('/>');
+    const isEndTag = r.startsWith('</') && r.endsWith('>');
 
     if (isEmptyTag) {
-      optimizedResult.push(result[i]);
+      optimizedResult.push(r);
     } else if (isStartTag) {
-      tagStack.push(result[i]);
+      tagStack.push(r);
     } else if (isEndTag) {
       // 取出标签名称
-      const tagName = result[i].substring(2, result[i].length - 1);
+      const tagName = r.substring(2, r.length - 1);
 
       // 需要与栈顶元素匹配
-      const isSameTag = tagStack[0].indexOf('<' + tagName) == 0;
-      // console.log('tagName', tagName, isSameTag);
-      tagStack.push(result[i]);
-      // 本次匹配结束
-      if (isSameTag) {
-        optimizedResult.push(tagStack);
-        // 重置栈
-        tagStack = [];
+      if (tagStack[0]) {
+        const isSameTag = tagStack[0] ? tagStack[0].indexOf('<' + tagName) == 0 : false;
+        // console.log('tagName', tagName, isSameTag);
+        tagStack.push(r);
+        // 本次匹配结束
+        if (isSameTag) {
+          optimizedResult.push(tagStack);
+          // 重置栈
+          tagStack = [];
+        }
+      } else {
+        // </p> 没有对应的 <p> 标签，直接忽略
+        optimizedResult.push(r);
       }
     } else {
       // 文本
       if (tagStack.length) {
-        tagStack.push(result[i]);
+        tagStack.push(r);
       } else {
-        optimizedResult.push(result[i]);
+        optimizedResult.push(r);
       }
     }
   }
@@ -82,22 +88,35 @@ export default class VerbatimOutput {
     start: 0,
     rich: true,
     markdown: false,
+    endLineBreak: false,
   };
 
   _intervalId = 0;
 
   constructor(text: VerbatimText, options: VerbatimOptions) {
     this.options = { ...this.options, ...options };
-    let richText = `${text}`;
-    if (this.options.markdown) {
-      const md = markdownit();
-      richText = md.render(`${text}`, { hastNode: false }) as string;
-    }
-    this.richText = richText;
+    this.richText = this.handleRawText(text);
     if (options.before) {
       options.before();
     }
     this.outputRichText(this.richText, options);
+  }
+
+  handleRawText(text: VerbatimText) {
+    // 处理换行符
+    let richText = `${text}`.replace(/\n/g, '<br/>');
+    // 处理Markdown语法
+    if (this.options.markdown) {
+      const md = markdownit({ html: true, xhtmlOut: true, linkify: true, breaks: true });
+      richText = md.render(`${text}`, { hastNode: false }) as string;
+    }
+    // 处理结束换行符
+    if (this.options.endLineBreak && (!richText.endsWith('<br/>') || !richText.endsWith('<br>'))) {
+      richText = `${richText}<br/>`;
+    } else {
+      richText = richText.replace(/<br\/?>$/, '');
+    }
+    return richText;
   }
 
   outputRichText(text: string, opts: VerbatimOptions = {}) {
@@ -138,7 +157,7 @@ export default class VerbatimOutput {
       // console.log('currStepStr', currStepStr);
 
       if (stepIdx < currStepStr.length) {
-        currText += currStepStr[stepIdx].replace(/\n/g, '<br>');
+        currText += currStepStr[stepIdx];
         // index++;
         stepIdx++;
         round++;
