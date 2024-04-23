@@ -18,13 +18,14 @@ const baseExtensions = ['.ts', '.tsx', '.js', '.jsx'/* , '.vue' */];
 const baseConfig = {
   input: 'src/index.ts',
 
-  external: [],
+  external: ['markdown-it'],
 };
 
 // UMD/IIFE shared settings: output.globals
 // Refer to https://rollupjs.org/guide/en#output-globals for details
 const globals = {
   // Provide global variable names to replace your external imports
+  'markdown-it': 'markdownit'
 };
 
 const pluginsPre = [
