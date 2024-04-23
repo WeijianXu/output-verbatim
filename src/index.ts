@@ -2,10 +2,11 @@
  * @Author: WeijianXu weijian.xu@unidt.com
  * @Date: 2024-04-17 15:15:45
  * @LastEditors: WeijianXu weijian.xu@unidt.com
- * @LastEditTime: 2024-04-23 11:54:05
+ * @LastEditTime: 2024-04-23 15:43:28
  * @FilePath: \output-verbatim\src\index.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
+import markdownit from 'markdown-it';
 import { VerbatimText, VerbatimOptions } from '../types/index.d';
 
 export function splitRichText(str: VerbatimText): Array<string | string[]> {
@@ -79,13 +80,20 @@ export default class VerbatimOutput {
   options: VerbatimOptions = {
     speed: 30,
     start: 0,
+    rich: true,
+    markdown: false,
   };
 
   _intervalId = 0;
 
   constructor(text: VerbatimText, options: VerbatimOptions) {
-    this.richText = `${text}`;
     this.options = { ...this.options, ...options };
+    let richText = `${text}`;
+    if (this.options.markdown) {
+      const md = markdownit();
+      richText = md.render(`${text}`, { hastNode: false }) as string;
+    }
+    this.richText = richText;
     if (options.before) {
       options.before();
     }
@@ -107,7 +115,8 @@ export default class VerbatimOutput {
       // console.error('No input text');
       return;
     }
-    const strList = splitRichText(richText) || [];
+    // 富文本方式，还是原字符输出方式
+    const strList = options.rich ? (splitRichText(richText) || []) : [richText];
     // let index = 0; // 打印游标
     let step = 0; // 打印步长
     let stepIdx = 0; // 当前步长游标

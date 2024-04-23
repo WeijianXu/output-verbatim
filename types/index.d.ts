@@ -2,15 +2,7 @@
  * @Author: WeijianXu weijian.xu@unidt.com
  * @Date: 2024-04-17 15:04:09
  * @LastEditors: WeijianXu weijian.xu@unidt.com
- * @LastEditTime: 2024-04-22 17:44:54
- * @FilePath: \output-verbatim\types\index.d.ts
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- */
-/*
- * @Author: WeijianXu weijian.xu@unidt.com
- * @Date: 2024-04-17 15:04:09
- * @LastEditors: WeijianXu weijian.xu@unidt.com
- * @LastEditTime: 2024-04-18 10:25:10
+ * @LastEditTime: 2024-04-23 15:13:49
  * @FilePath: \output-verbatim\types\index.d.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -28,6 +20,13 @@ export interface VerbatimOptions {
    * 如果否，则按照原始数据打印
    */
   rich?: boolean;
+
+  /**
+   * 是否按照markdown格式将字符转成HTML输出
+   * 如果是，则将按照markdown格式将字符转成HTML输出
+   * 如果否，则按照原始数据输出
+   */
+  markdown?: boolean;
 
   /**
    * 传入字符从那里开始，默认从0开始，否则，从指定的index开始。
