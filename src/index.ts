@@ -2,7 +2,7 @@
  * @Author: WeijianXu weijian.xu@unidt.com
  * @Date: 2024-04-17 15:15:45
  * @LastEditors: WeijianXu weijian.xu@unidt.com
- * @LastEditTime: 2024-04-22 16:51:56
+ * @LastEditTime: 2024-04-23 11:54:05
  * @FilePath: \output-verbatim\src\index.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -118,7 +118,7 @@ export default class VerbatimOutput {
     let currText = preText + stepInfo.start; // 当前打印文本
     let currStepStr = stepInfo.text;
 
-    this._intervalId = window.setInterval(() => {
+    this._intervalId = setInterval(() => {
       if (step >= strList.length) {
         clearInterval(this._intervalId);
         if (options.complete) {
@@ -151,7 +151,7 @@ export default class VerbatimOutput {
         currStepStr = stepInfo.text;
         currText += stepInfo.start; // 先加上开始标签，输出时加上结束标签
       }
-    }, options.speed || 30);
+    }, options.speed || 30) as unknown as number;
   }
 
   stop() {
