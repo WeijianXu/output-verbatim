@@ -2,7 +2,7 @@
  * @Author: WeijianXu weijian.xu@unidt.com
  * @Date: 2024-04-17 15:04:09
  * @LastEditors: WeijianXu weijian.xu@unidt.com
- * @LastEditTime: 2024-04-23 17:59:14
+ * @LastEditTime: 2024-04-23 18:56:00
  * @FilePath: \output-verbatim\types\index.d.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -43,7 +43,12 @@ export interface VerbatimOptions {
 
   before?: () => void;
 
-  complete?: () => void;
+  /**
+   * 可以用来修正Markdown形式下标签不对的
+   * @param finalText 最终打印的文本内容
+   * @returns 
+   */
+  complete?: (finalText: string) => void;
 
   // customMade?: boolean;
 }

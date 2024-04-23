@@ -39,6 +39,11 @@ const output = new OutputVerbatim(
       console.log(currText);
       content.value = currText;
     },
+    // Can be used to fix the problem of incorrect tags in Markdown syntax
+    complete: function (finalText) {
+      console.log(finalText);
+      console.log('complete');
+    },
   },
 );
 

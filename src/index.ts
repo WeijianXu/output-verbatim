@@ -2,7 +2,7 @@
  * @Author: WeijianXu weijian.xu@unidt.com
  * @Date: 2024-04-17 15:15:45
  * @LastEditors: WeijianXu weijian.xu@unidt.com
- * @LastEditTime: 2024-04-23 17:53:07
+ * @LastEditTime: 2024-04-23 18:42:09
  * @FilePath: \output-verbatim\src\index.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -42,10 +42,9 @@ export function splitRichText(str: VerbatimText): Array<string | string[]> {
           // 重置栈
           tagStack = [];
         }
-      } else {
-        // </p> 没有对应的 <p> 标签，直接忽略
-        optimizedResult.push(r);
       }
+      // </p> 没有对应的 <p> 标签，直接忽略
+      // continue;
     } else {
       // 文本
       if (tagStack.length) {
@@ -81,6 +80,8 @@ function getCurrStepInfo(currStepStr: string | string[]) {
 
 export default class VerbatimOutput {
 
+  rawText: VerbatimText = '';
+
   richText = '';
 
   options: VerbatimOptions = {
@@ -94,6 +95,7 @@ export default class VerbatimOutput {
   _intervalId = 0;
 
   constructor(text: VerbatimText, options: VerbatimOptions) {
+    this.rawText = text;
     this.options = { ...this.options, ...options };
     this.richText = this.handleRawText(text);
     if (options.before) {
@@ -114,7 +116,7 @@ export default class VerbatimOutput {
     if (this.options.endLineBreak && (!richText.endsWith('<br/>') || !richText.endsWith('<br>'))) {
       richText = `${richText}<br/>`;
     } else {
-      richText = richText.replace(/<br\/?>$/, '');
+      richText = richText.replace(/(<br\/?>|\n)$/, '');
     }
     return richText;
   }
@@ -150,7 +152,8 @@ export default class VerbatimOutput {
       if (step >= strList.length) {
         clearInterval(this._intervalId);
         if (options.complete) {
-          options.complete();
+          // 打印完成，参数用于修正Markdown过程中的标签错误
+          options.complete(this.handleRawText(this.rawText));
         }
         return;
       }
