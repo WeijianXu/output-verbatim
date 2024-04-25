@@ -55,6 +55,64 @@ p {
 </style>
 ```
 
+频繁调用时:
+
+```vue
+<template>
+  <p v-html="content"></p>
+</template>
+<script setup>
+import OutputVerbatim from 'output-verbatim';
+import { ref, onUnmounted } from 'vue';
+
+const chartText = ref('');
+
+// 逐字输出的封装方法
+let output = null;
+const verbatimOutput = (text, start) => {
+  // chartText.value = '';
+  let index = 0;
+  // 停止上一次输出
+  if (output) {
+    output.stop();
+  }
+  output = new Verbatim(text, {
+    speed: 30,
+    start: start >= 0 ? start : 0,
+    before: (preText) => {
+      chartText.value = preText;
+    },
+    eachRound: (currText) => {
+      console.log(currText);
+      chartText.value = currText;
+      ctx.emit('verbatim', ++index);
+    },
+    complete: (finalText) => {
+      chartText.value = finalText;
+      ctx.emit('verbatim', 0);
+    },
+    markdown: true,
+  })
+};
+
+// mock async call
+let index = 0;
+let content = '';
+const timer = setInterval(() => {
+  const start = content.length;
+  content = content + Array(5).fill(index).join('');
+  verbatimOutput(content, start);
+  index++;
+  if (index > 10) {
+    clearInterval(timer);
+  }
+}, 100);
+
+onUnmounted(() => {
+  output.stop();
+});
+```
+
 ## 说明
 
 | 参数         | 说明                                                           | 类型     | 默认值    |

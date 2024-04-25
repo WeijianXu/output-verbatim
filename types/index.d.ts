@@ -2,12 +2,14 @@
  * @Author: WeijianXu weijian.xu@unidt.com
  * @Date: 2024-04-17 15:04:09
  * @LastEditors: WeijianXu weijian.xu@unidt.com
- * @LastEditTime: 2024-04-23 18:56:00
+ * @LastEditTime: 2024-04-25 15:45:39
  * @FilePath: \output-verbatim\types\index.d.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 
 export type VerbatimText = string | number;
+
+export type VerbatimStringArray = Array<string | string[]>;
 
 export interface VerbatimOptions {
   /**
@@ -41,7 +43,7 @@ export interface VerbatimOptions {
 
   eachRound?: (currRichText: string, richText: string) => void;
 
-  before?: () => void;
+  before?: (prefix?: string) => void;
 
   /**
    * 可以用来修正Markdown形式下标签不对的
@@ -60,4 +62,26 @@ export interface VerbatimOptions {
  */
 export default class VerbatimOutput {
 
+}
+
+export interface StepInfo {
+  /**
+   * 标签前缀，可能是标签本身，也可能是包含标签的前一段文本
+   */
+  prefix: string,
+
+  /**
+   * 标签本身
+   */
+  tag: string,
+
+  /**
+   * 标签后缀，目前是结束标签本身
+   */
+  suffix: string,
+
+  /**
+   * 标签包裹的内容
+   */
+  text: string,
 }

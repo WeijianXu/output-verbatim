@@ -2,7 +2,7 @@
  * @Author: WeijianXu weijian.xu@unidt.com
  * @Date: 2024-04-17 12:03:52
  * @LastEditors: WeijianXu weijian.xu@unidt.com
- * @LastEditTime: 2024-04-23 15:59:43
+ * @LastEditTime: 2024-04-25 16:03:24
  * @FilePath: \output-verbatim\README.md
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -74,6 +74,62 @@ p {
   }
 }
 </style>
+```
+
+Frequent call scenarios:
+
+```vue
+<template>
+  <p v-html="content"></p>
+</template>
+<script setup>
+import OutputVerbatim from 'output-verbatim';
+import { ref, onUnmounted } from 'vue';
+
+const chartText = ref('');
+
+// Encapsulation method for verbatim output
+let output = null;
+const verbatimOutput = (text, start) => {
+  // chartText.value = '';
+  let index = 0;
+  // Stop previous output
+  if (output) {
+    output.stop();
+  }
+  output = new Verbatim(text, {
+    speed: 30,
+    start: start >= 0 ? start : 0,
+    before: (preText) => {
+      chartText.value = preText;
+    },
+    eachRound: (currText) => {
+      console.log(currText);
+      chartText.value = currText;
+    },
+    complete: (finalText) => {
+      chartText.value = finalText;
+    },
+    markdown: true,
+  })
+};
+
+// mock async call
+let index = 0;
+let content = '';
+const timer = setInterval(() => {
+  const start = content.length;
+  content = content + Array(5).fill(index).join('');
+  verbatimOutput(content, start);
+  index++;
+  if (index > 10) {
+    clearInterval(timer);
+  }
+}, 100);
+
+onUnmounted(() => {
+  output.stop();
+});
 ```
 
 ## Options
