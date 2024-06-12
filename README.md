@@ -2,7 +2,7 @@
  * @Author: WeijianXu weijian.xu@unidt.com
  * @Date: 2024-04-17 12:03:52
  * @LastEditors: WeijianXu weijian.xu@unidt.com
- * @LastEditTime: 2024-04-25 16:03:24
+ * @LastEditTime: 2024-06-12 18:11:20
  * @FilePath: \output-verbatim\README.md
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -134,16 +134,17 @@ onUnmounted(() => {
 
 ## Options
 
-| property     | description                                                                         | type     | default   |
-| ------------ | ----------------------------------------------------------------------------------- | -------- | --------- |
-| speed        | Printing speed per word. One word, one cycle.                                       | Number   | 30        |
-| start        | Start print begin at the index of the string, default is 0                          | Number   | 0         |
-| rich         | Whether it is rich text, if so HTML tags are output directly.                       | Boolean  | true      |
-| markdown     | Whether the characters are converted to HTML according to markdown syntax.          | Boolean  | false     |
-| endLineBreak | Whether to add a line break at the end of the string.                               | Boolean  | false     |
-| eachRound    | Output one word per cycle, rich text will contain labels                            | Function | undefined |
-| before       | Callback function before printing starts, can be used for initialization operations | Function | undefined |
-| complete     | Callback function at the end of the print that can be used for cleanup operations   | Function | undefined |
+| property     | description                                                                                                      | type     | default   |
+| ------------ | ---------------------------------------------------------------------------------------------------------------- | -------- | --------- |
+| speed        | Printing speed per word. One word, one cycle.                                                                    | Number   | 30        |
+| start        | Start print begin at the index of the string, default is 0                                                       | Number   | 0         |
+| rich         | Whether it is rich text, if so HTML tags are output directly.                                                    | Boolean  | true      |
+| markdown     | Whether the characters are converted to HTML according to markdown syntax.                                       | Boolean  | false     |
+| endLineBreak | Whether to add a line break at the end of the string.                                                            | Boolean  | false     |
+| stream       | Whether to output one character per cycle, if not, stop cycle, then call `complete` to output the whole string . | Boolean  | true      |
+| eachRound    | Output one word per cycle, rich text will contain labels                                                         | Function | undefined |
+| before       | Callback function before printing starts, can be used for initialization operations                              | Function | undefined |
+| complete     | Callback function at the end of the print that can be used for cleanup operations                                | Function | undefined |
 
 > Note: Input text can currently support rich text, but only one level, not nested.
 > Such as `<b>bold<i>italic</i></b>` ，output will be `<b>bold<i>italic</b>` but not `<b>bold<i>italic</i></b>`

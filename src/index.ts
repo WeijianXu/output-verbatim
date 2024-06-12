@@ -2,7 +2,7 @@
  * @Author: WeijianXu weijian.xu@unidt.com
  * @Date: 2024-04-17 15:15:45
  * @LastEditors: WeijianXu weijian.xu@unidt.com
- * @LastEditTime: 2024-04-25 17:26:36
+ * @LastEditTime: 2024-06-12 18:05:42
  * @FilePath: \output-verbatim\src\index.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -18,7 +18,7 @@ export function getTagName(str: string) {
 export function splitRichText(str: VerbatimText, preText = ''): VerbatimStringArray {
   // 匹配任意的HTML标签及其内容
   const regex = /(<[^>]+>)|([^<]+)/g;
-  let result = `${str}`.match(regex) || [];
+  const result = `${str}`.match(regex) || [];
 
   // 优化结果，将连续的文本合并为一个数组项
   let optimizedResult: VerbatimStringArray = [];
@@ -122,6 +122,7 @@ export default class VerbatimOutput {
     rich: true,
     markdown: false,
     endLineBreak: false,
+    stream: false, // 是否停止动效，原样输出
   };
 
   _intervalId = 0;
@@ -162,6 +163,12 @@ export default class VerbatimOutput {
   outputRichText(text: string, opts: VerbatimOptions = {}) {
     const options = { ...this.options, ...opts };
     let richText = text;
+    if (!options.stream) {
+      // 停止上一次的计时器
+      this.stop();
+      options.complete && options.complete(richText);
+      return;
+    }
     // 先打印起始文本
     let preText = '';
     if (this._start) {

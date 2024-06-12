@@ -2,7 +2,7 @@
  * @Author: WeijianXu weijian.xu@unidt.com
  * @Date: 2024-04-17 15:04:09
  * @LastEditors: WeijianXu weijian.xu@unidt.com
- * @LastEditTime: 2024-04-25 15:45:39
+ * @LastEditTime: 2024-06-12 18:05:27
  * @FilePath: \output-verbatim\types\index.d.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -35,6 +35,12 @@ export interface VerbatimOptions {
    * 位置小于start的字符，原样输出，没有逐字逐句打印效果
    */
   start?: number;
+
+  /**
+   * 是否逐字逐句输出，默认是
+   * 如果否，则一次性输出整个文本内容
+   */
+  stream?: boolean;
 
   /**
    * 末尾是否换行，默认不换行
