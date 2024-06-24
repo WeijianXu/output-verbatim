@@ -2,7 +2,7 @@
  * @Author: WeijianXu weijian.xu@unidt.com
  * @Date: 2024-04-17 15:04:09
  * @LastEditors: WeijianXu weijian.xu@unidt.com
- * @LastEditTime: 2024-06-12 18:05:27
+ * @LastEditTime: 2024-06-24 19:04:58
  * @FilePath: \output-verbatim\types\index.d.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -35,6 +35,13 @@ export interface VerbatimOptions {
    * 位置小于start的字符，原样输出，没有逐字逐句打印效果
    */
   start?: number;
+
+  /**
+   * 步长，默认为1，即逐字逐句打印
+   * 如果步长为2，则每周期打印2个字符，
+   * 如果步长为3，则每周期打印3个字符
+   */
+  stride?: number;
 
   /**
    * 是否逐字逐句输出，默认是

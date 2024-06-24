@@ -119,6 +119,7 @@ onUnmounted(() => {
 | ------------ | ------------------------------------------------------------------------------- | -------- | --------- |
 | speed        | 打印周期，默认 30 毫秒一个周期                                                  | Number   | 30        |
 | start        | 传入字符从那里开始，默认从 0 开始，否则，从指定的 index 开始。                  | Number   | 0         |
+| stride       | 每个周期打印的字数，默认为 1 个字                                               | Number   | 1         |
 | rich         | 是否为富文本                                                                    | Boolean  | true      |
 | markdown     | 是否按照 markdown 格式将字符转成 HTML 输出                                      | Boolean  | false     |
 | endLineBreak | 是否在输出的最后添加换行符，默认为 false                                        | Boolean  | false     |

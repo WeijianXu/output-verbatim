@@ -2,7 +2,7 @@
  * @Author: WeijianXu weijian.xu@unidt.com
  * @Date: 2024-04-17 12:03:52
  * @LastEditors: WeijianXu weijian.xu@unidt.com
- * @LastEditTime: 2024-06-12 18:11:20
+ * @LastEditTime: 2024-06-24 19:05:24
  * @FilePath: \output-verbatim\README.md
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -138,6 +138,7 @@ onUnmounted(() => {
 | ------------ | ---------------------------------------------------------------------------------------------------------------- | -------- | --------- |
 | speed        | Printing speed per word. One word, one cycle.                                                                    | Number   | 30        |
 | start        | Start print begin at the index of the string, default is 0                                                       | Number   | 0         |
+| stride       | The number of characters to output per cycle.                                                                    | Number   | 1         |
 | rich         | Whether it is rich text, if so HTML tags are output directly.                                                    | Boolean  | true      |
 | markdown     | Whether the characters are converted to HTML according to markdown syntax.                                       | Boolean  | false     |
 | endLineBreak | Whether to add a line break at the end of the string.                                                            | Boolean  | false     |

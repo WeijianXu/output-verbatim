@@ -2,7 +2,7 @@
  * @Author: WeijianXu weijian.xu@unidt.com
  * @Date: 2024-04-17 15:15:45
  * @LastEditors: WeijianXu weijian.xu@unidt.com
- * @LastEditTime: 2024-06-12 18:05:42
+ * @LastEditTime: 2024-06-24 19:08:44
  * @FilePath: \output-verbatim\src\index.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -123,6 +123,7 @@ export default class VerbatimOutput {
     markdown: false,
     endLineBreak: false,
     stream: false, // 是否停止动效，原样输出
+    stride: 1, // 步长
   };
 
   _intervalId = 0;
@@ -220,7 +221,7 @@ export default class VerbatimOutput {
       if (stepIdx < currStepStr.length) {
         currText += currStepStr[stepIdx];
         // index++;
-        stepIdx++;
+        stepIdx += options.stride || 1;
         round++;
         // 当前轮次下的打印文本
 
