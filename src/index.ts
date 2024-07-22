@@ -2,7 +2,7 @@
  * @Author: WeijianXu weijian.xu@unidt.com
  * @Date: 2024-04-17 15:15:45
  * @LastEditors: WeijianXu weijian.xu@unidt.com
- * @LastEditTime: 2024-06-24 19:08:44
+ * @LastEditTime: 2024-07-22 16:27:23
  * @FilePath: \output-verbatim\src\index.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -131,7 +131,6 @@ export default class VerbatimOutput {
   constructor(text: VerbatimText, options: VerbatimOptions) {
     this.rawText = text;
     this.options = { ...this.options, ...options };
-    this._start = this.options.start || 0;
 
     this.richText = this.handleRawText(text);
     this.outputRichText(this.richText, options);
@@ -139,14 +138,17 @@ export default class VerbatimOutput {
 
   handleRawText(text: VerbatimText) {
     // 处理换行符
+    let preRichText = `${text}`.substring(0, this.options.start).replace(/\n/g, '<br/>');
     let richText = `${text}`.replace(/\n/g, '<br/>');
+
     // 处理Markdown语法
     if (this.options.markdown) {
       const md = markdownit({ html: true, xhtmlOut: true, linkify: true, breaks: true });
       richText = md.render(`${text}`, { hastNode: false }) as string;
+      preRichText = md.render(`${preRichText}`, { hastNode: false }) as string;
       // 如果设置了 start ，此时 start 需要调整到正确为止
       if (this.options.start) {
-        this._start = richText.indexOf(`${text}`.substring(0, 1)) + this.options.start;
+        this._start = preRichText.length;
       } else {
         this._start = 0;
       }
@@ -195,7 +197,8 @@ export default class VerbatimOutput {
     let stepInfo = getCurrStepInfo(strList[step]);
 
     // 当start存在时，preText已经加入到strList中，不需要再次追加
-    let currText = stepInfo.prefix === preText ? stepInfo.prefix : preText + stepInfo.prefix; // 当前打印文本
+    // 当前打印文本
+    let currText = stepInfo.prefix === preText ? stepInfo.prefix : preText + stepInfo.prefix;
     let currStepStr = stepInfo.text;
 
     if (options.before) {
